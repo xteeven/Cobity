@@ -23,7 +23,7 @@ Cobify is a simple Unity 3D Plugin that enables quick robot prototyping for Hapt
 
 The unityPackage includes all the required files to run the code in your project. Just import it and add it to you scene.
 
-![](/pictures/UnityInterface.png)
+![interface](/pictures/UnityInterface.png)
 
 Move the robot by introducing values in the target position field. Please be aware that these values represent meters (m).
 
