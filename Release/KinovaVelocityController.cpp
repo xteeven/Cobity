@@ -152,14 +152,6 @@ extern "C" __declspec(dllexport) bool example_move_to_home_position()
 	}
 }
 
-void printFeedback() {
-	while (printer)
-	{
-		//feedback = base_cyclic->RefreshFeedback();
-		std::cout << "X: (Pitch)" << feedback.base().tool_pose_theta_x() << " Y: " << feedback.base().tool_pose_theta_y() << " Z: (Yaw) " << feedback.base().tool_pose_theta_z() << std::endl;
-		//std::cout << "X: " << feedback.base().tool_pose_x() << " Y: " << feedback.base().tool_pose_y() << " Z: " << feedback.base().tool_pose_z() << std::endl;
-	}
-}
 
 float limit(float value, float min, float max) {
 	if (value < min)
@@ -429,8 +421,8 @@ extern "C" __declspec(dllexport) void createServices() {
 	t_roll = 0;
 	//t_finger = 0.0f;
 	//finger_speed = 1.0f;
-	proportional = 0.7;
-	proportionalRotation = 2;
+	proportional = 1.0;
+	proportionalRotation = 1;
 	
 	/*
 	if(gripper_command.mutable_gripper()->finger_size()>0){
@@ -475,65 +467,65 @@ void transtest(){
 
 	//Z 0.5 0 [0.2 - 0.6]
 
-	float proportionaltest = 2.0f;
+	float proportionaltest = 1.0f;
 
 
 	//X TEST
-	for (int i=0; i<10; i++)
+	for (int i=0; i<1; i++)
 	{
 	
-	setProportional(4);
-	setDerivative(proportionaltest);
-	setPose(0.5, 0.0, -0.1);
+	setProportional(1);
+	setDerivative(0);
+	setPose(0.5, 0.0, 0.2);
 
-	//std::ofstream myfile;
-	//std::string filename = "C:/Users/hcump/Dropbox/Steeven_PhD/UIST/TechicTestx" + std::to_string(proportionaltest * 10) + ".csv";
-	//myfile.open(filename);
-	//myfile << "Time, Axis, Target, P, Measured\n";
+	std::ofstream myfile;
+	std::string filename = "C:/Users/hcump/Dropbox/Steeven_PhD/UIST/TechicTestz" + std::to_string(proportionaltest * 10) + ".csv";
+	myfile.open(filename);
+	myfile << "Time, Axis, Target, P, Measured\n";
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
 	typedef std::chrono::milliseconds ms;
 	auto begintest = std::chrono::steady_clock::now();
 
-	setPose(0.5, 0.2, -0.1);
-	for (int t = 0; t < 300; t++)
+	setPose(0.5, 0.0, 0.6);
+	for (int t = 0; t < 500; t++)
 	{
 		auto elapsed = std::chrono::steady_clock::now() - begintest;
 		ms d = std::chrono::duration_cast<ms>(elapsed);
-		//myfile << d.count() << ", x," << 0.8 << "," << proportionaltest << "," << getxpos() << "\n";
+		myfile << d.count() << ", z," << 0.6 << "," << proportionaltest << "," << getxpos() << "\n";
 		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	}
 
-	setPose(0.5, -0.2, -0.1);
-	for (int t = 0; t < 300; t++)
+	setPose(0.5, 0.0, 0.2);
+	for (int t = 0; t < 500; t++)
 	{
 		auto elapsed = std::chrono::steady_clock::now() - begintest;
 		ms d = std::chrono::duration_cast<ms>(elapsed);
-		//myfile << d.count() << ", x," << 0.4 << "," << proportionaltest << "," << getxpos() << "\n";
-		std::this_thread::sleep_for(std::chrono::milliseconds(5));
-	}
-
-
-	setPose(0.5, 0.2, -0.1);
-	for (int t = 0; t < 300; t++)
-	{
-		auto elapsed = std::chrono::steady_clock::now() - begintest;
-		ms d = std::chrono::duration_cast<ms>(elapsed);
-		//myfile << d.count() << ", x," << 0.8 << "," << proportionaltest << "," << getxpos() << "\n";
-		std::this_thread::sleep_for(std::chrono::milliseconds(5));
-	}
-
-	setPose(0.5, -0.2, -0.1);
-	for (int t = 0; t < 300; t++)
-	{
-		auto elapsed = std::chrono::steady_clock::now() - begintest;
-		ms d = std::chrono::duration_cast<ms>(elapsed);
-		//myfile << d.count() << ", x," << 0.4 << "," << proportionaltest << "," << getxpos() << "\n";
+		myfile << d.count() << ", z," << 0.2 << "," << proportionaltest << "," << getxpos() << "\n";
 		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	}
 
 
-	//myfile.close();
+	setPose(0.5, 0.0, 0.6);
+	for (int t = 0; t < 500; t++)
+	{
+		auto elapsed = std::chrono::steady_clock::now() - begintest;
+		ms d = std::chrono::duration_cast<ms>(elapsed);
+		myfile << d.count() << ", z," << 0.6 << "," << proportionaltest << "," << getxpos() << "\n";
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+
+	setPose(0.5, 0.0, 0.2);
+	for (int t = 0; t < 500; t++)
+	{
+		auto elapsed = std::chrono::steady_clock::now() - begintest;
+		ms d = std::chrono::duration_cast<ms>(elapsed);
+		myfile << d.count() << ", z," << 0.2 << "," << proportionaltest << "," << getxpos() << "\n";
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+
+
+	myfile.close();
 	proportionaltest += 1.0f;
 	}
 }
@@ -546,20 +538,20 @@ void rottest() {
 
 	//Z 0.5 0 [0.2 - 0.6]
 
-	int proportionaltest = 10;
+	int proportionaltest = 1;
 	setPose(0.6, 0, 0.4);
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	//X TEST
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 1; i++)
 	{
 
-		setProportionalRotation(5);
-		setDerivativeRotation(proportionaltest);
+		setProportionalRotation(1);
+		setDerivativeRotation(0.0);
 
-		setAngle(90, 45, 0);
+		setAngle(90, 90, 0);
 
 		std::ofstream myfile;
-		std::string filename = "C:/Users/hcump/Dropbox/Steeven_PhD/UIST/TechicTestyaw" + std::to_string(proportionaltest * 10) + ".csv";
+		std::string filename = "C:/Users/hcump/Dropbox/Steeven_PhD/UIST/TechicTestroll" + std::to_string(proportionaltest * 10) + ".csv";
 		myfile.open(filename);
 		myfile << "Time, Axis, Target, P, Measured\n";
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
@@ -567,40 +559,40 @@ void rottest() {
 		typedef std::chrono::milliseconds ms;
 		auto begintest = std::chrono::steady_clock::now();
 
-		setAngle(90, 135, 0);
-		for (int t = 0; t < 300; t++)
+		setAngle(90, 90, 0);
+		for (int t = 0; t < 500; t++)
 		{
 			auto elapsed = std::chrono::steady_clock::now() - begintest;
 			ms d = std::chrono::duration_cast<ms>(elapsed);
-			myfile << d.count() << ", yaw," << 0.8 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
+			myfile << d.count() << ", pitch," << 135 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 		}
 
-		setAngle(90, 45, 0);
-		for (int t = 0; t < 300; t++)
+		setAngle(90, 90, 0);
+		for (int t = 0; t < 500; t++)
 		{
 			auto elapsed = std::chrono::steady_clock::now() - begintest;
 			ms d = std::chrono::duration_cast<ms>(elapsed);
-			myfile << d.count() << ", yaw," << 0.4 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
+			myfile << d.count() << ", pitch," << 45 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 		}
 
 
-		setAngle(90, 135, 0);
-		for (int t = 0; t < 300; t++)
+		setAngle(90, 90, 0);
+		for (int t = 0; t < 500; t++)
 		{
 			auto elapsed = std::chrono::steady_clock::now() - begintest;
 			ms d = std::chrono::duration_cast<ms>(elapsed);
-			myfile << d.count() << ", yaw," << 0.8 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
+			myfile << d.count() << ", pitch," << 135 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 		}
 
-		setAngle(90, 45, 0);
-		for (int t = 0; t < 300; t++)
+		setAngle(90, 90, 0);
+		for (int t = 0; t < 500; t++)
 		{
 			auto elapsed = std::chrono::steady_clock::now() - begintest;
 			ms d = std::chrono::duration_cast<ms>(elapsed);
-			myfile << d.count() << ", yaw," << 0.4 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
+			myfile << d.count() << ", pitch," << 45 << "," << proportionaltest << "," << feedback.base().tool_pose_theta_z() << "\n";
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 		}
 
@@ -611,7 +603,7 @@ void rottest() {
 }
 
 
-
+/*
 int main(int argc, char** argv)
 {
 	// Create API objects
@@ -625,14 +617,14 @@ int main(int argc, char** argv)
 	
 	//std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
-	while (true) {
+	//while (true) {
 	
 	//	transtest();
 		rottest();
 	
 	
 	
-	}
+	//}
 
 	// Example core
 	//rottest();
@@ -652,6 +644,7 @@ int main(int argc, char** argv)
 		std::this_thread::sleep_for(std::chrono::milliseconds(30));
 	}
 	*/
+/*
 
 
 

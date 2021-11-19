@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Repositories\RobotPlugin\x64\Release\RobotPlugin.exe</FullPath>
+      <FullPath>C:\Repositories\Cobity\x64\Release\RobotPlugin.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

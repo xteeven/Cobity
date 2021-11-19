@@ -1,1 +1,2 @@
 C:\Repositories\RobotPlugin\x64\Release\RobotPlugin.exe
+C:\Repositories\Cobity\x64\Release\RobotPlugin.exe
