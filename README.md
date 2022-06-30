@@ -52,4 +52,19 @@ then run
 
 >cmake install
 
-If you have any feature request please contact us at [ANONYMIZED]
+If you have any feature request please contact us via the GitHub issues tracker.
+
+## Citing our work
+This work can be cited as follows:
+<pre>@inproceedings{villa2022cobity,
+title = {Cobity: A Plug-And-Play Toolbox to Deliver Haptics in Virtual Reality},
+author = {Villa, Steeven and Mayer, Sven},
+url = {https://github.com/xteeven/Cobity},
+doi = {10.1145/3543758.3543775},
+year = {2022},
+booktitle = {Proceedings of Mensch Und Computer 2022},
+publisher = {Association for Computing Machinery},
+address = {Darmstadt, Germany},
+series = {MuC'22}
+}
+</pre>
